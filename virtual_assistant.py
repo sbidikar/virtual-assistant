@@ -2,9 +2,8 @@ import speech_recognition as sr # recognise speech
 import playsound # to play an audio files
 from gtts import gTTS # google text to speech
 import random
-from time import ctime # get time details
-import webbrowser # open browser
 import time
+import webbrowser # open browser
 import os # to remove 
 import bs4 as bs
 
@@ -63,14 +62,9 @@ def respond(voice_data):
 
     # 4: time
     if there_exists(["what"] and ["time"]):
-        time = ctime().split(" ")[3].split(":")[0:2]
-        if time[0] == "00":
-            hours = '12'
-        else:
-            hours = time[0]
-        minutes = time[1]
-        time = hours + " hours and " + minutes + "minutes"
-        engine_speak(time)
+        t = time.localtime()
+        current_time = time.strftime("%H:%M:%S", t)
+        engine_speak(current_time)
 
     # 5: search google
     if there_exists(["search for"]) and 'youtube' not in voice_data:
@@ -85,13 +79,6 @@ def respond(voice_data):
         url = "https://www.youtube.com/results?search_query=" + search_term
         webbrowser.get().open(url)
         engine_speak("Here is what I found for " + search_term + "on youtube")
-
-    #7: get stock price
-    if there_exists(["price of"]):
-        search_term = voice_data.split("for")[-1]
-        url = "https://google.com/search?q=" + search_term
-        webbrowser.get().open(url)
-        engine_speak("Here is what I found for " + search_term + " on google")
     
     if there_exists(["exit", "quit", "goodbye"]):
         engine_speak("GoodByee")
