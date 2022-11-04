@@ -1,7 +1,7 @@
 # Virtual Assistant
 
 ### Overview
-Karen is virtual assistant which runs on python. Currently Karen can Greet, Tell its name, search for user provided query on Google, search for user inputds on youtube, tell time etc.
+David is virtual assistant which runs on python. Currently Karen can Greet, Tell its name, search for user provided query on Google, search for user inputds on youtube, tell time etc.
 
 ## Requirements
 [Python](https://www.python.org/downloads/)
@@ -15,6 +15,8 @@ pip install gtts
 pip install PyAudio
 pip install PyObjc
 pip install webbrowser
+pip install datetime
+pip install os
 ```
 
 ## How to run?
