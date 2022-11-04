@@ -54,14 +54,14 @@ def respond(voice_data):
 
     # 2: name
     if there_exists(["what is your name","what's your name","tell me your name"]):
-            engine_speak("My name is David")
+            engine_speak("My name is Karen")
 
     # 3: greeting
     if there_exists(["how are you","how are you doing"]):
         engine_speak("I'm very well, thanks for asking ")
 
     # 4: time
-    if there_exists(["what"] and ["time"]):
+    if there_exists((["what","what's"] or ["tell"]) and ["time"]):
         t = time.localtime()
         current_time = time.strftime("%H:%M:%S", t)
         engine_speak(current_time)
@@ -80,14 +80,22 @@ def respond(voice_data):
         webbrowser.get().open(url)
         engine_speak("Here is what I found for " + search_term + "on youtube")
     
+    # 6: search amazon
+    if there_exists(["amazon"]):
+        search_term = voice_data.split("for")[-1]
+        url="https://www.amazon.com"+search_term
+        webbrowser.get().open(url)
+        engine_speak("here is what i found for"+search_term + "on amazon.com")
+    
     if there_exists(["exit", "quit", "goodbye"]):
         engine_speak("GoodByee")
         exit()
+        
 
 
 time.sleep(1)
 
-
+voice_data = record_audio("Hi I am Karen your virtual assistant")
 while(1):
     voice_data = record_audio("") # get the voice input
     print("Done")
