@@ -74,7 +74,7 @@ def respond(voice_data):
         engine_speak("Here is what I found for" + search_term + "on google")
 
     # 6: search youtube
-    if there_exists(["youtube"]):
+    if there_exists(["search on youtube for","youtube"]):
         search_term = voice_data.split("for")[-1]
         url = "https://www.youtube.com/results?search_query=" + search_term
         webbrowser.get().open(url)
@@ -83,11 +83,10 @@ def respond(voice_data):
     # 6: search amazon
     if there_exists(["amazon"]):
         search_term = voice_data.split("for")[-1]
-        url="https://www.amazon.com"+search_term
         webbrowser.get().open(url)
         engine_speak("here is what i found for"+search_term + "on amazon.com")
     
-    if there_exists(["exit", "quit", "goodbye"]):
+    if there_exists(["exit", "quit", "goodbye","end"]):
         engine_speak("GoodByee")
         exit()
         
