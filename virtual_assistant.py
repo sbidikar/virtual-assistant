@@ -98,15 +98,16 @@ def respond(command):
 
 
 time.sleep(1)
-voice_data = record_audio("Hi I am david your virtual assistant")
+voice_data = record_audio("Hi I am david your virtual assistant, you can ask me anything by saying Hi David")
 while(1):
     voice_data = record_audio("") # get the voice input
     print("Done")
     print("Q:", voice_data)
-    if voice_data.startswith('hey david'):
+    if voice_data.startswith('hey david') or voice_data.startswith('hi david') :
         print('listening')
-        command = voice_data.split('hey david ')[-1]
-        if command == 'hey david':
+        command = voice_data.split('david ')[-1]
+        print('command '+ command)
+        if command == ('hey david' or 'hi david'):
             greetings = ["hey, how can I help you", "hey, what's up?", "I'm listening", "how can I help you?", "hello"]
             greet = greetings[random.randint(0,len(greetings)-1)]
             engine_speak(greet)
