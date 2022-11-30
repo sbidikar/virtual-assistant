@@ -1,9 +1,10 @@
 # Virtual Assistant
 
 ### Overview
-David is virtual assistant which runs on python. Currently Karen can Greet, Tell its name, search for user provided query on Google, search for user inputds on youtube, tell time etc.
+David is virtual assistant which runs on python. Currently David can Greet, Tell its name, search for user provided query on Google, search for user inputds on youtube, tell time etc.
 
 ## Requirements
+Install the Python 3 interpreter on your computer. This is the program that reads Python programs and carries out their instructions
 [Python](https://www.python.org/downloads/)
 
 ## Installations
