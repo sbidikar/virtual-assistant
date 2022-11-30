@@ -1,4 +1,5 @@
 import speech_recognition as sr # recognise speech
+import pyttsx3
 import playsound # to play an audio files
 from gtts import gTTS # google text to speech
 import random
@@ -6,6 +7,7 @@ import time
 import datetime
 import webbrowser # open browser
 import os # to remove
+import wikipedia
 
 
 
@@ -18,6 +20,7 @@ def engine_speak(text):
     text = str(text)
 
 r = sr.Recognizer() # initialise a recogniser
+engine = pyttsx3.init()
 # listen for audio and convert it to text:
 def record_audio(ask=""):
     with sr.Microphone() as source: # microphone as source
@@ -29,7 +32,7 @@ def record_audio(ask=""):
         try:
             voice_data = r.recognize_google(audio)  # convert audio to text
         except sr.UnknownValueError: # error: recognizer does not understand
-            engine_speak('I did not get that')
+            engine_speak('I did not get that, please say with Hi David')
         except sr.RequestError:
             engine_speak('Sorry, the service is down') # error: recognizer is not connected
         print(">>", voice_data.lower()) # print what user said
@@ -56,12 +59,10 @@ def respond(command):
         engine_speak("I'm very well, thanks for asking ")
 
     # time
-    if there_exists((["what","what's"] or ["tell"]) and ["time"]):
-        time = str(datetime.datetime.now())
+    if there_exists(["time"]):
+        time = datetime.datetime.now().strftime('%I:%M %p')
         print(time)
-        hour = time[11:13]
-        min = time[14:16]
-        current_time = "The time is " + hour + "Hours and" + min + "Minutes"
+        current_time = "The time is " + time
         engine_speak(current_time)
 
     #search google
@@ -90,6 +91,60 @@ def respond(command):
         url = "https://www.walmart.com/search?q="+ search_term
         webbrowser.get().open(url)
         engine_speak("here is what i found for "+search_term + " on walmart.com")
+    
+    if there_exists(["who is"]):
+        person = command.replace('who is', '')
+        info = wikipedia.summary(person, 1)
+        print(info)
+        engine_speak(info)
+        if there_exists(["game"]):
+            voice_data = record_audio("choose among rock paper or scissor")
+        moves=["rock", "paper", "scissor"]
+    
+        cmove=random.choice(moves)
+        pmove=voice_data
+        
+
+        engine_speak("The computer chose " + cmove)
+        engine_speak("You chose " + pmove)
+        #engine_speak("hi")
+        if pmove==cmove:
+            engine_speak("the match is draw")
+        elif pmove== "rock" and cmove== "scissor":
+            engine_speak("Player wins")
+        elif pmove== "rock" and cmove== "paper":
+            engine_speak("Computer wins")
+        elif pmove== "paper" and cmove== "rock":
+            engine_speak("Player wins")
+        elif pmove== "paper" and cmove== "scissor":
+            engine_speak("Computer wins")
+        elif pmove== "scissor" and cmove== "paper":
+            engine_speak("Player wins")
+        elif pmove== "scissor" and cmove== "rock":
+            engine_speak("Computer wins")
+
+    #11 toss a coin
+    if there_exists(["toss","flip","coin"]):
+        moves=["head", "tails"]   
+        cmove=random.choice(moves)
+        engine_speak("The computer chose " + cmove)
+    
+        #12 calc
+    if there_exists(["plus","minus","multiply","divide","power","+","-","*","/"]):
+        opr = voice_data.split()[1]
+
+        if opr == '+':
+            engine_speak(int(voice_data.split()[0]) + int(voice_data.split()[2]))
+        elif opr == '-':
+            engine_speak(int(voice_data.split()[0]) - int(voice_data.split()[2]))
+        elif opr == 'multiply':
+            engine_speak(int(voice_data.split()[0]) * int(voice_data.split()[2]))
+        elif opr == 'divide':
+            engine_speak(int(voice_data.split()[0]) / int(voice_data.split()[2]))
+        elif opr == 'power':
+            engine_speak(int(voice_data.split()[0]) ** int(voice_data.split()[2]))
+        else:
+            engine_speak("Wrong Operator")
     
     if there_exists(["exit", "quit", "goodbye","end"]):
         engine_speak("GoodByee")
