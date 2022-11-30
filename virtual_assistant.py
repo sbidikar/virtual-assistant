@@ -97,8 +97,9 @@ def respond(command):
         info = wikipedia.summary(person, 1)
         print(info)
         engine_speak(info)
-        if there_exists(["game"]):
-            voice_data = record_audio("choose among rock paper or scissor")
+        
+    if there_exists(["game"]):
+        voice_data = record_audio("choose among rock paper or scissor")
         moves=["rock", "paper", "scissor"]
     
         cmove=random.choice(moves)
@@ -131,18 +132,25 @@ def respond(command):
     
         #12 calc
     if there_exists(["plus","minus","multiply","divide","power","+","-","*","/"]):
-        opr = voice_data.split()[1]
-
+        opr = command.split()[1]
+        print('operator '+opr)
+        first=int(command.split()[0])
+        second=int(command.split()[2])
         if opr == '+':
-            engine_speak(int(voice_data.split()[0]) + int(voice_data.split()[2]))
+            answer=first + second
+            engine_speak(answer)
         elif opr == '-':
-            engine_speak(int(voice_data.split()[0]) - int(voice_data.split()[2]))
+            answer=first - second
+            engine_speak(answer)
         elif opr == 'multiply':
-            engine_speak(int(voice_data.split()[0]) * int(voice_data.split()[2]))
+            answer=first * second
+            engine_speak(answer)
         elif opr == 'divide':
-            engine_speak(int(voice_data.split()[0]) / int(voice_data.split()[2]))
+            answer=first / second
+            engine_speak(answer)
         elif opr == 'power':
-            engine_speak(int(voice_data.split()[0]) ** int(voice_data.split()[2]))
+            answer=first ** second
+            engine_speak(answer)
         else:
             engine_speak("Wrong Operator")
     
@@ -155,6 +163,7 @@ def respond(command):
 time.sleep(1)
 voice_data = record_audio("Hi I am david your virtual assistant, you can ask me anything by saying Hi David")
 while(1):
+    print('Listening')
     voice_data = record_audio("") # get the voice input
     print("Done")
     print("Q:", voice_data)
